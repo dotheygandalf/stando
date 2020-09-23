@@ -45,7 +45,7 @@ const drawImage = async (
     const X_OFFSET = 25;
     const Y_OFFSET = 25 + STAND_Y_OFFSET;
 
-    ctx.font = "30px Arial";
+    ctx.font = "30px DejaVu Sans";
 
     const bgColors = [
       "green",
@@ -61,10 +61,10 @@ const drawImage = async (
       ctx.drawImage(image, 0, 0, 750, 550);
 
       ctx.globalAlpha = 1.0;
-      ctx.fillText("「STAND NAME」", 40, 80);
+      ctx.fillText("『STAND NAME』", 40, 80);
       ctx.strokeText(name.toUpperCase(), 60, 120);
 
-      ctx.fillText("「STAND MASTER」", 400, 420);
+      ctx.fillText("『STAND MASTER』", 400, 420);
       ctx.strokeText(master.toUpperCase(), 420, 460);
 
       ctx.globalAlpha = 0.4;
