@@ -32,7 +32,9 @@ const drawImage = async (
   range: number,
   durability: number,
   precision: number,
-  potential: number
+  potential: number,
+  name: string,
+  master: string
 ): Promise<Buffer> => {
   const canvas = Canvas.createCanvas(750, 550);
   return new Promise((res, reject) => {
@@ -43,8 +45,17 @@ const drawImage = async (
     const X_OFFSET = 25;
     const Y_OFFSET = 25 + STAND_Y_OFFSET;
 
+    ctx.font = "30px Arial";
+
     Canvas.loadImage("src/img/abstract-clouds.jpg").then((image) => {
       ctx.drawImage(image, 0, 0, 750, 550);
+
+      ctx.globalAlpha = 1.0;
+      ctx.fillText("「STAND NAME」", 40, 80);
+      ctx.strokeText(name.toUpperCase(), 60, 120);
+
+      ctx.fillText("「STAND MASTER」", 400, 420);
+      ctx.strokeText(master.toUpperCase(), 420, 460);
 
       ctx.globalAlpha = 0.4;
       ctx.fillStyle = "green";
@@ -72,7 +83,13 @@ const drawImage = async (
       ctx.fill();
 
       Canvas.loadImage("src/img/stand-chart.png").then((image) => {
-        ctx.drawImage(image, 0 + STAND_X_OFFSET, 0 + STAND_Y_OFFSET, 350, 350);
+        ctx.drawImage(
+          image,
+          20 + STAND_X_OFFSET,
+          -20 + STAND_Y_OFFSET,
+          350,
+          350
+        );
         res(canvas.toBuffer());
       });
     });
@@ -83,14 +100,25 @@ const drawImage = async (
 };
 
 app.get("/stand.png", function(req, res) {
-  let { power, speed, range, durability, precision, potential } = req.query;
+  let {
+    power,
+    speed,
+    range,
+    durability,
+    precision,
+    potential,
+    name = "unknown",
+    master = "unknown",
+  } = req.query;
   if (
     typeof power !== "string" &&
     typeof speed !== "string" &&
     typeof range !== "string" &&
     typeof durability !== "string" &&
     typeof precision !== "string" &&
-    typeof potential !== "string"
+    typeof potential !== "string" &&
+    typeof name !== "string" &&
+    typeof master !== "string"
   ) {
     power = Math.floor(Math.random() * 6) + 1 + "";
     speed = Math.floor(Math.random() * 6) + 1 + "";
@@ -106,7 +134,9 @@ app.get("/stand.png", function(req, res) {
     parseInt(range as string, 10),
     parseInt(durability as string, 10),
     parseInt(precision as string, 10),
-    parseInt(potential as string, 10)
+    parseInt(potential as string, 10),
+    name as string,
+    master as string
   )
     .then((result) => {
       res.contentType("image/png");
