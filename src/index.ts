@@ -47,6 +47,16 @@ const drawImage = async (
 
     ctx.font = "30px Arial";
 
+    const bgColors = [
+      "green",
+      "tomato",
+      "orange",
+      "dodgerblue",
+      "gray",
+      "slateblue",
+      "violet",
+    ];
+
     Canvas.loadImage("src/img/abstract-clouds.jpg").then((image) => {
       ctx.drawImage(image, 0, 0, 750, 550);
 
@@ -58,7 +68,7 @@ const drawImage = async (
       ctx.strokeText(master.toUpperCase(), 420, 460);
 
       ctx.globalAlpha = 0.4;
-      ctx.fillStyle = "green";
+      ctx.fillStyle = bgColors[Math.floor(Math.random() * bgColors.length)];
       ctx.fillRect(0, 0, canvas.width, canvas.height);
       ctx.globalAlpha = 1.0;
 
