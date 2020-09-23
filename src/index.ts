@@ -68,7 +68,7 @@ const drawImage = async (
   });
 };
 
-app.get("/", function(req, res) {
+app.get("/stand.png", function(req, res) {
   const power = Math.floor(Math.random() * 6) + 1;
   const speed = Math.floor(Math.random() * 6) + 1;
   const range = Math.floor(Math.random() * 6) + 1;
