@@ -50,14 +50,14 @@ const drawImage = async (
 
     ctx.font = "30px Arial Unicode";
 
-    const bgColors = [
-      "green",
-      "tomato",
-      "orange",
-      "dodgerblue",
-      "gray",
-      "slateblue",
-      "violet",
+    const colors = [
+      { bg: "green", chart: "gray" },
+      { bg: "tomato", chart: "dodgerblue" },
+      { bg: "orange", chart: "green" },
+      { bg: "dodgerblue", chart: "tomato" },
+      { bg: "gray", chart: "slateblue" },
+      { bg: "slateblue", chart: "orange" },
+      { bg: "violet", chart: "green" },
     ];
 
     Canvas.loadImage("src/img/abstract-clouds.jpg").then((image) => {
@@ -70,12 +70,14 @@ const drawImage = async (
       ctx.fillText("『STAND MASTER』", 400, 420);
       ctx.strokeText(master.toUpperCase(), 420, 460);
 
+      const color = colors[Math.floor(Math.random() * colors.length)];
+
       ctx.globalAlpha = 0.4;
-      ctx.fillStyle = bgColors[Math.floor(Math.random() * bgColors.length)];
+      ctx.fillStyle = color["chart"];
       ctx.fillRect(0, 0, canvas.width, canvas.height);
       ctx.globalAlpha = 1.0;
 
-      ctx.fillStyle = "red";
+      ctx.fillStyle = color["bg"];
       ctx.beginPath();
       ctx.moveTo(PowerX[power] + X_OFFSET, PowerY[power] + Y_OFFSET);
       ctx.lineTo(SpeedX[speed] + X_OFFSET, SpeedY[speed] + Y_OFFSET);
