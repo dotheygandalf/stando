@@ -45,8 +45,8 @@ const drawImage = async (
     const STAND_X_OFFSET = 0;
     const STAND_Y_OFFSET = 200;
 
-    const X_OFFSET = 25;
-    const Y_OFFSET = 25 + STAND_Y_OFFSET;
+    const X_OFFSET = 45;
+    const Y_OFFSET = 5 + STAND_Y_OFFSET;
 
     ctx.font = "30px Arial Unicode";
 
