@@ -33,7 +33,7 @@ const drawImage = async (
   durability: number,
   precision: number,
   potential: number
-): Promise<string> => {
+): Promise<Buffer> => {
   const canvas = Canvas.createCanvas(400, 400);
   return new Promise((res, reject) => {
     const ctx = canvas.getContext("2d");
@@ -63,7 +63,7 @@ const drawImage = async (
 
       ctx.drawImage(image, 0, 0, 350, 350);
       // console.log('<img src="' + canvas.toDataURL() + '" />');
-      res('<img src="' + canvas.toDataURL() + '" />');
+      res(canvas.toBuffer());
     });
   });
 };
@@ -78,6 +78,7 @@ app.get("/", function(req, res) {
 
   drawImage(power, speed, range, durability, precision, potential)
     .then((result) => {
+      res.contentType("image/png");
       res.send(result);
     })
     .catch((err) => {
