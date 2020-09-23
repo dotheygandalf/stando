@@ -37,7 +37,7 @@ const drawImage = async (
   master: string
 ): Promise<Buffer> => {
   Canvas.registerFont("src/fonts/arial.ttf", {
-    family: "arial",
+    family: "Arial",
   });
   const canvas = Canvas.createCanvas(750, 550);
   return new Promise((res, reject) => {
