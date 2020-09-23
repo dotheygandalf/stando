@@ -34,11 +34,14 @@ const drawImage = async (
   precision: number,
   potential: number
 ): Promise<Buffer> => {
-  const canvas = Canvas.createCanvas(400, 400);
+  const canvas = Canvas.createCanvas(350, 350);
   return new Promise((res, reject) => {
     const ctx = canvas.getContext("2d");
     const X_OFFSET = 25;
     const Y_OFFSET = 25;
+
+    ctx.fillStyle = "white";
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
 
     Canvas.loadImage("src/img/stand-chart.png").then((image) => {
       ctx.fillStyle = "red";
@@ -69,20 +72,37 @@ const drawImage = async (
 };
 
 app.get("/stand.png", function(req, res) {
-  const power = Math.floor(Math.random() * 6) + 1;
-  const speed = Math.floor(Math.random() * 6) + 1;
-  const range = Math.floor(Math.random() * 6) + 1;
-  const durability = Math.floor(Math.random() * 6) + 1;
-  const precision = Math.floor(Math.random() * 6) + 1;
-  const potential = Math.floor(Math.random() * 6) + 1;
+  let { power, speed, range, durability, precision, potential } = req.query;
+  if (
+    typeof power !== "string" &&
+    typeof speed !== "string" &&
+    typeof range !== "string" &&
+    typeof durability !== "string" &&
+    typeof precision !== "string" &&
+    typeof potential !== "string"
+  ) {
+    power = Math.floor(Math.random() * 6) + 1 + "";
+    speed = Math.floor(Math.random() * 6) + 1 + "";
+    range = Math.floor(Math.random() * 6) + 1 + "";
+    durability = Math.floor(Math.random() * 6) + 1 + "";
+    precision = Math.floor(Math.random() * 6) + 1 + "";
+    potential = Math.floor(Math.random() * 6) + 1 + "";
+  }
 
-  drawImage(power, speed, range, durability, precision, potential)
+  drawImage(
+    parseInt(power as string, 10),
+    parseInt(speed as string, 10),
+    parseInt(range as string, 10),
+    parseInt(durability as string, 10),
+    parseInt(precision as string, 10),
+    parseInt(potential as string, 10)
+  )
     .then((result) => {
       res.contentType("image/png");
-      res.send(result);
+      return res.send(result);
     })
     .catch((err) => {
-      res.send(err);
+      return res.send(err);
     });
 });
 
