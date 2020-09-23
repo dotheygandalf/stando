@@ -34,16 +34,23 @@ const drawImage = async (
   precision: number,
   potential: number
 ): Promise<Buffer> => {
-  const canvas = Canvas.createCanvas(350, 350);
+  const canvas = Canvas.createCanvas(750, 550);
   return new Promise((res, reject) => {
     const ctx = canvas.getContext("2d");
+    const STAND_X_OFFSET = 0;
+    const STAND_Y_OFFSET = 200;
+
     const X_OFFSET = 25;
-    const Y_OFFSET = 25;
+    const Y_OFFSET = 25 + STAND_Y_OFFSET;
 
-    ctx.fillStyle = "white";
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    Canvas.loadImage("src/img/abstract-clouds.jpg").then((image) => {
+      ctx.drawImage(image, 0, 0, 750, 550);
 
-    Canvas.loadImage("src/img/stand-chart.png").then((image) => {
+      ctx.globalAlpha = 0.4;
+      ctx.fillStyle = "green";
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      ctx.globalAlpha = 1.0;
+
       ctx.fillStyle = "red";
       ctx.beginPath();
       ctx.moveTo(PowerX[power] + X_OFFSET, PowerY[power] + Y_OFFSET);
@@ -64,10 +71,14 @@ const drawImage = async (
       ctx.closePath();
       ctx.fill();
 
-      ctx.drawImage(image, 0, 0, 350, 350);
-      // console.log('<img src="' + canvas.toDataURL() + '" />');
-      res(canvas.toBuffer());
+      Canvas.loadImage("src/img/stand-chart.png").then((image) => {
+        ctx.drawImage(image, 0 + STAND_X_OFFSET, 0 + STAND_Y_OFFSET, 350, 350);
+        res(canvas.toBuffer());
+      });
     });
+
+    // ctx.fillStyle = "white";
+    // ctx.fillRect(0, 0, canvas.width, canvas.height);
   });
 };
 
