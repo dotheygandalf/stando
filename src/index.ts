@@ -36,8 +36,8 @@ const drawImage = async (
   name: string,
   master: string
 ): Promise<Buffer> => {
-  Canvas.registerFont("src/fonts/arial.ttf", {
-    family: "Arial",
+  Canvas.registerFont("src/fonts/Arial-Unicode.ttf", {
+    family: "Arial Unicode",
   });
   const canvas = Canvas.createCanvas(750, 550);
   return new Promise((res, reject) => {
@@ -48,7 +48,7 @@ const drawImage = async (
     const X_OFFSET = 25;
     const Y_OFFSET = 25 + STAND_Y_OFFSET;
 
-    ctx.font = "30px DejaVu Sans";
+    ctx.font = "30px Arial Unicode";
 
     const bgColors = [
       "green",
